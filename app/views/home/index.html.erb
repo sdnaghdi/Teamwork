@@ -1,0 +1,48 @@
+<% title 'Overview' %>
+
+<div style="float: left; width: 670px;">
+<% for user in @users %>
+
+    <div class="stage rounded-top-5" style="margin-bottom: 15px;">
+        <div class="user-tasks">
+            <div class="header rounded-top-5">
+                <a href="javascript:void(0)" onclick="Effect.toggle('<%= user.username %>_tasks','blind')">
+                    <span style="float: left;"><%=h user.username.capitalize %>'s Pending Tasks</span>
+                </a>
+               
+                    <span class="icon overdue" style="float: right;"><%= user.tasks.overdue.size %></span>
+                    <span class="icon task" style="float: right;"><%= user.tasks.in_progress.size %></span>
+                
+                <div class="clear"></div>
+            </div>
+            <ul class="tasks" id="<%= user.username %>_tasks" style="display:none;">
+                <% for task in user.tasks.in_progress %>
+                <li>
+                    <div style="width: 55px; float: left; margin-right: 10px;">
+                        <%= task.getIcon %> 
+                    </div>
+                    <div class="task-desc">
+                        <%= link_to shorten(task.description,70), task_url(:id=>task.id) %>
+                    </div>
+                    <div class="task-status">
+                        <span class="icon calendar"><%= distance_of_time_in_words(Date.today,task.deadline) %></span>
+                        <select class="state" disabled>
+                            <%= options_for_select([["Waiting", "waiting"], ["WIP", "working"], ["Completed", "completed"], ["Cancelled", "cancelled"]],task.state) %>
+                        </select>
+                    </div>
+                    <div class="clear"></div>
+                </li>
+                <% end %>
+            </ul>
+        </div>
+    </div>
+
+<% end %>
+</div>
+<div class="sidebar">
+    
+    <%= render :partial => '/layouts/projects' %>
+    
+    <%= render :partial => '/layouts/sidecal' %>
+    
+</div>

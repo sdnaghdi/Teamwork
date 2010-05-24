@@ -1,0 +1,38 @@
+<% title "Sign up" %>
+<div class="stage rounded-top-5" style="margin-bottom: 15px;">
+    <div class="user-tasks">
+        <div class="header rounded-top-5">
+            <span style="float: left;">Add New User</span><br>
+            <div class="clear"></div>
+        </div>
+        <div class="pad-25">
+            <% form_for @user do |f| %>
+              <%= f.error_messages %>
+              <p>
+                <%= f.label :username %><br />
+                <%= f.text_field :username %>
+              </p>
+              <p>
+                <%= f.label :email, "Email Address" %><br />
+                <%= f.text_field :email %>
+              </p>
+              <p>
+                <%= f.label :password %><br />
+                <%= f.password_field :password %>
+              </p>
+              <p>
+                <%= f.label :password_confirmation, "Confirm Password" %><br />
+                <%= f.password_field :password_confirmation %>
+              </p>
+              <p>
+                  <button class="button" style="width: auto; padding-bottom: 6px;" type="submit">
+                      <span class="create">Save User</span>
+                  </button>
+              </p>
+            <% end %>
+        </div>
+    </div>
+</div>
+<div class="sidebar">
+    
+</div>

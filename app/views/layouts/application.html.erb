@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Teamwork | <%= h(yield(:title) || "Untitled") %></title>
+    
+    <link rel="stylesheet" href="/stylesheets/blueprint/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="/stylesheets/blueprint/print.css" type="text/css" media="print">	
+	<!--[if lt IE 8]>
+		<link rel="stylesheet" href="/stylesheets/blueprint/ie.css" type="text/css" media="screen, projection">
+	<![endif]-->
+    <%= stylesheet_link_tag 'application' %>
+    <%= stylesheet_link_tag 'rounded' %>
+    <%= stylesheet_link_tag 'dashboard' %>
+    <%= stylesheet_link_tag "calendar_date_select/red" %> 
+    <%= stylesheet_link_tag "calendar/blue/style" %> 
+    
+    <%= javascript_include_tag :defaults %>
+    <%= javascript_include_tag "jquery-1.3.2" %>
+    
+	<%= javascript_include_tag "calendar_date_select/calendar_date_select" %>
+    <%= javascript_include_tag "calendar_date_select/format_finnish" %>
+    
+    <script type="text/javascript">
+		jQuery.noConflict();
+	</script>
+    
+    <script type="text/javascript">
+        
+        function showTaskLoader() {
+            $('task-loader').style.display='';
+        }
+        
+        function hideTaskLoader() {
+            $('task-loader').style.display='none';
+        }
+        
+        function newTask() {
+            $('new-task').style.backgroundColor='#EBEBEB';
+            $('new-task-link').style.color="#000000";
+        }
+        
+        function closeNewTask() {
+            $('new-task').style.backgroundColor='#183F17';
+            $('new-task-link').style.color="#FFFFFF";
+        }
+        
+        function openGoogleCal() {
+            $('google-cal-tab').style.backgroundColor='#EBEBEB';
+            $('google-cal-link').style.color="#000000";
+        }
+        
+        function closeGoogleCal() {
+            $('google-cal-tab').style.backgroundColor='#183F17';
+            $('google-cal-link').style.color="#FFFFFF";
+        }
+        
+        function growl(msg) {
+            jQuery.jGrowl(msg);
+        }
+        
+    </script>
+    
+    <%= include_growlr %>
+    
+    <%= yield(:head) %>
+    
+    
+  </head>
+  <body>
+    <div class="wrapper">
+        <div class="nav">
+            <div class="container">
+            
+                    <div class="span-24">
+                        <div class="span-12" style="margin-bottom: 10px;">
+                            <% if logged_in? %>
+                            <div style="float: left; margin-right: 20px;">
+                                <%= gravatar_for current_user %> 
+                            </div>
+                            <% end %>
+                            <h3 class="title" style="margin-bottom: 0;">TEAMWORK</h3>
+                            <% if logged_in? %>
+                                <span style="font-size: 12px; color: #fff;">Logged in as <%= current_user.username %></span>
+                            <% end %>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="span-12 last">
+                            <% if logged_in? %>
+                            <div class="current-user">
+                            
+                                <span class="icon logout"><%= link_to 'Logout', logout_url %></span>
+                            </div>
+                            <% end %>
+                         </div>
+                    </div>
+                <% if logged_in? %>
+                    <div class="span-24">
+                        <ul class="navigation">
+                            <li <%= current_selection('Overview') %>><a href="<%= home_url %>">Overview</a></li>
+                            <li <%= current_selection('Tasks') %>>
+                            
+                                <a href="<%= tasks_url(:id=>current_user.id) %>">
+                                    Tasks
+                                </a>
+                            
+                            </li>
+                            <li <%= current_selection('Projects') %>><a href="<%= projects_url %>">Projects</a></li>
+                            <li <%= current_selection('Users') %>><a href="<%= users_url %>">The Team</a></li>
+                            <li <%= current_selection('Account') %>><a href="<%= account_url(:id=>current_user.id) %>">My Account</a></li>
+                        
+                            <li class="last" id="new-task">
+                                <a id="new-task-link" href="javascript:void(0);" onclick="$('quick-task').style.display=''; newTask();">
+                                    Add New Task
+                                </a>
+                            </li>
+                        
+                            <li class="last" id="google-cal-tab" style="margin-right: 5px;">
+                                <a id="google-cal-link" href="javascript:void(0);" 
+                                    onclick="$('google-cal').style.display=''; openGoogleCal();
+                                    <%= remote_function(
+                    											 :loading => "jQuery.jGrowl('Loading team calendar...');",
+                    			 							  	 :success => "",
+                    											 :method  => :get,
+                    										  	 :url 	  => reload_gcal_tasks_url) %>">
+                                    Team Calendar
+                                </a>
+                            </li>
+                        
+                            <div class="clear"></div>
+                        </ul>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+        <div class="container">
+            <div class="span-24">
+                <div id="quick-task" style="display: none;">
+                    <%= render :partial => '/layouts/newtask' %>
+                </div>
+                <div id="google-cal" style="display: none; margin-top: 20px;">
+                
+                    <a href="javascript:void(0)" class="button" type="button" style="margin-bottom: 15px; padding: 6px; width: 75px;"
+                        onclick="<%= remote_function(
+        											 :loading => "jQuery.jGrowl('Refreshing google calendar...');",
+        			 							  	 :success => "",
+        											 :method  => :get,
+        										  	 :url 	  => reload_gcal_tasks_url) %>">
+                        <span class="refresh">Refresh</span>
+                    </a>
+                
+                    <div style="float: right; width: 100px;">
+                        <a href="javascript:void(0);" onclick="$('google-cal').style.display='none'; closeGoogleCal();">
+                            <img style="float: right;" src="/images/cross.png" />
+                        </a>
+                    </div>
+                    <div class="clear"></div>
+                    <div id="gcal" style="width: 950px; text-align: center;">
+                        <img src="/images/ajax-loader.gif" />
+                    </div>
+                </div>
+                <div id="container">
+                
+                    <%= yield %>
+                
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="clear"></div>
+    <div class="footer">
+        <div class="container">
+            <div class="span-24">
+                Teamwork is an open-source task management system built using Ruby on Rails. It is suitable for small teams
+                to keep constant tabs on projects, tasks and deadlines. Nothing complicated. Straight to the point.
+            </div>
+            <div class="span-24 prepend-top" style="text-align: left;">
+                Developed by<br>
+                www.leanis.com.my
+            </div>
+        </div>
+    </div>
+    
+    <% if logged_in? %>
+    
+        <script type="text/javascript">
+        document.write(unescape("%3Cscript src='" + ((document.location.protocol=="https:")?"https:":"http:") +     "//snapabug.appspot.com/snapabug.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">
+        SnapABug.addButton('420f6730-763d-4135-8f7e-96ac5180022e',"0","55%");
+        </script>
+    
+    <% end %>
+    
+  </body>
+</html>

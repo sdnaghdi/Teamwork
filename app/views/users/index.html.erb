@@ -1,0 +1,50 @@
+<% title "Users" %>
+<div class="stage rounded-top-5" style="margin-bottom: 15px;">
+    <div class="user-tasks">
+        <div class="header rounded-top-5">
+            <span style="float: left;">All Members</span><br>
+            <div class="clear"></div>
+        </div>
+    
+        <div class="pad-25">
+            
+            <table class="list">
+              <tr>
+                <th width="60"></th>
+                <th>Username</th>
+                <th>Fullname</th>
+                <th>Role</th>
+                <th>State</th>
+                <th colspan="3">Actions</th>
+              </tr>
+              <% for user in @users %>
+                <tr>
+                  <td>
+                    <%= gravatar_for user %> 
+                  </td>
+                  <td><%=h user.username %></td>
+                  <td><%=h user.profile.fullname unless user.profile.nil? %></td>
+                  <td><%=h user.roles.first.title %></td>
+                  <td><%=h user.state.capitalize %></td>
+                  <td><%= link_to "Show", user %></td>
+                  <td>
+                      <% restrict_to "(Admin)" do %>
+                        <%= link_to "Edit", edit_user_path(user) %>
+                      <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </table>
+            
+        </div>
+    </div>
+</div>
+<div class="sidebar">
+    <% restrict_to "(Admin)" do %>
+    <p>
+        <a class="button" style="width: auto; padding: 8px 12px;" href="<%= new_user_path %>">
+            <span class="add">Add New User</span>
+        </a>
+    </p>
+    <% end %>
+</div>

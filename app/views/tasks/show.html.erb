@@ -1,0 +1,32 @@
+<% title "Edit Tasks" %>
+<div class="stage rounded-top-5" style="margin-bottom: 15px;">
+    <div class="user-tasks">
+        <div class="header rounded-top-5">
+            
+            <%= @task.getIcon %>
+            <span style="float: left;">Due on <%= simple_date(@task.deadline) %> (<%= distance_of_time_in_words(Date.today,@task.deadline) %> left)</span><br>
+            <span style="font-size: 11px">
+                Assigned on <%= formatted_date_with_time(@task.created_at) %> by <%= @task.assigned_by %>
+            </span>
+            
+            <span class="icon overdue" style="float: right;"></span>
+            <span class="icon task" style="float: right;"></span>
+            <div class="clear"></div>
+        </div>
+        <div class="pad-25">
+            <%= render :partial => 'form' %>
+        </div>
+    </div>
+</div>
+<div class="sidebar">
+    <% restrict_to "(Admin | Manager)" do %>
+    <a class="button" style="width: auto; padding: 8px 12px;" href="<%= edit_task_url(:id=>@task.id) %>">
+        <span class="edit">Edit Task</span>
+    </a>
+    <a class="button" style="width: auto; padding: 8px 12px;" href="<%= tasks_path(:id=>@user.id) %>">
+        <span class="back">Back</span>
+    </a>
+    <br><br>
+    <% end %>
+    <%= render :partial => '/layouts/user' %>
+</div>

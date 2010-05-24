@@ -1,0 +1,25 @@
+<% form_for @task do |f| %>
+  <p>
+    <%= @task.description %>
+  </p>
+  <p>
+    <%= f.label :state, "State" %><br/>
+    <select id="task_state" name="task[state]" class="state" <% if @task.user.id != current_user.id %>disabled<% end %>>
+        <% if @task.state == 'waiting' %>
+            <%= options_for_select([["Waiting", "waiting"],["WIP", "working"], ["Completed", "completed"]],@task.state) %>
+        <% else %>
+            <%= options_for_select([["WIP", "working"], ["Completed", "completed"]],@task.state) %>
+        <% end %>
+    </select>
+  </p>
+  <% if @task.user.id == current_user.id %>
+      <p>
+          <%= f.label :hours, "Hours Spent (Only when completed)" %><br />
+          <%= f.text_field :hours_spent, :class=>'dashboard' %>
+          <div class="clear"></div>
+      </p>
+      <br>
+      <p><%= f.submit "Update Status" %></p>
+  <% end %>
+<% end %>
+        

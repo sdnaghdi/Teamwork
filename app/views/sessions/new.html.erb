@@ -1,0 +1,22 @@
+<% title "Log in" %>
+<div class="stage rounded-top-5" style="margin-bottom: 15px; width: auto;">
+    <div class="user-tasks">
+        <div class="header rounded-top-5">
+            <span style="float: left;">Login</span><br>
+            <div class="clear"></div>
+        </div>
+        <div class="pad-25">
+            <% form_tag sessions_path do %>
+              <p>
+                <%= label_tag :login, "Email Address" %><br />
+                <%= text_field_tag :login, params[:login] %>
+              </p>
+              <p>
+                <%= label_tag :password %><br />
+                <%= password_field_tag :password %>
+              </p>
+              <p><%= submit_tag "Log in" %></p>
+            <% end %>  
+        </div>
+    </div>
+</div>

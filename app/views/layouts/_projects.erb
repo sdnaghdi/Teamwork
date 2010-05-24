@@ -1,0 +1,31 @@
+<% restrict_to "(Admin | Manager)" do %>
+<a class="button" style="width: auto; padding: 8px 12px;" href="<%= new_project_url %>">
+    <span class="add">Add New Project</span>
+</a>
+<br><br>
+<% end %>
+<div class="sidebar-title">
+    <span class="icon active-project"><%= Project.active.size %> Active Projects</span>
+</div>
+<div style="padding: 10px">
+    <ul class="projects">
+        <% for project in Project.active %>
+            <li>
+                <%=link_to project.title, project_url(:id=>project.id) %>
+            </li>
+        <% end %>
+    </ul>
+</div>
+<br>
+<div class="sidebar-title">
+    <span class="icon inactive-project"><%= Project.inactive.size %> Inactive/Completed Projects</span>
+</div>
+<div style="padding: 10px">
+    <ul class="projects">
+        <% for project in Project.inactive %>
+            <li>
+                <%=link_to project.title, project_url(:id=>project.id) %>
+            </li>
+        <% end %>
+    </ul>
+</div>

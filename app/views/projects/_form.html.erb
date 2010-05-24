@@ -1,0 +1,36 @@
+<% content_for :head do %>
+    <%= javascript_include_tag :ckeditor %>
+<% end %>
+<% form_for @project do |f| %>
+  <p>
+    <%= f.label :title, "Title" %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :description, "Description" %><br />
+    <%= f.cktext_area :description, :toolbar=>'Leanis', :width=>'608px', :height=>'200px' %>
+    
+    <script type="text/javascript">
+    	//<![CDATA[
+    	    CKEDITOR.replace( 'project_description' );
+    	//]]>
+    </script>
+    
+  </p>
+  <p>
+      <%= f.label :deadline, "Deadline" %><br />
+      <input id="project_deadline" name="project[deadline]" type="text" class="dashboard" value="<%= @deadline %>"/> 
+      <img alt="Calendar" onclick="new CalendarDateSelect( $(this).previous(), {year_range:10} );" src="/images/calendar_date_select/calendar.gif?1274159722" style="border:0px; cursor:pointer;" />
+  </p>
+  <p>
+    <%= f.label :state, "State" %><br/>
+    <select id="project_state" name="project[state]">
+        <%= options_for_select([["Active", "Active"], ["Inactive", "Inactive"]],@project.state) %>
+    </select>
+  </p>
+  <p>
+      <button class="button" style="width: auto; padding-bottom: 6px;" type="submit">
+          <span class="create">Save Project</span>
+      </button>
+  </p>
+<% end %>

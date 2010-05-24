@@ -1,0 +1,44 @@
+<% remote_form_for :task, :loading =>"", 
+                          :success => "", 
+                          :url => tasks_url, :html => { :method => :post } do |f| %>
+
+    <div class="quick-task">
+        <div style="float: left;">
+            Task Details<br>
+            <%= f.text_area :description, :class=>"text-area", :value=>'' %> 
+        </div>
+        <div style="float: left; margin-left: 15px;">
+            Project<br>
+            <%= collection_select(:task, :project_id, Project.active, :id, :title, {:prompt => true}, :class=>'dashboard') %>
+            <br class="margin-15">
+            Assign To<br>
+            <%= collection_select(:task, :user_id, User.active, :id, :username, {:prompt => true}, :class=>'dashboard') %>
+        </div>
+        <div style="float: left; margin-left: 15px;">
+            Deadline<br>
+            <input id="task_deadline" name="task[deadline]" type="text" class="dashboard"/> 
+            <img alt="Calendar" onclick="new CalendarDateSelect( $(this).previous(), {year_range:10} );" src="/images/calendar_date_select/calendar.gif?1274159722" style="border:0px; cursor:pointer;" />
+            
+            <br class="margin-15">
+            Priority<br>
+            <select class="dashboard" id="task_priority" name="task[priority]">
+                <option value="0">Low</option>
+                <option value="1">Medium</option>
+                <option value="2">High</option>
+                <option value="3">Do It Now</option>
+            </select>
+        </div>
+        <div style="float: right; width: 100px;">
+            <a href="javascript:void(0);" onclick="$('quick-task').style.display='none'; closeNewTask();">
+                <img style="float: right;" src="/images/cross.png" />
+            </a>
+            
+            <button class="button" onclick="jQuery.jGrowl('Creating Your New Task...');" type="submit" 
+            class="create-task" style="margin-top: 90px;">
+                <span class="create">Create</span>
+            </button>
+            
+        </div>
+        <div class="clear"></div>
+    </div>
+<% end -%>

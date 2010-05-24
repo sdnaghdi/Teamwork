@@ -1,0 +1,126 @@
+
+input.dashboard, select.dashboard {
+	width:149px;
+	padding: 5px;
+	margin-right: 5px;
+	float: left;
+}
+
+select.dashboard {
+	width: 161px;
+}
+
+button.dashboard {
+	background:url("/images/dashboard-icon.gif") repeat scroll 0 0 transparent;
+	border:0 none;
+	cursor:pointer;
+	height:20px;
+	margin-right:10px;
+	width:20px;
+	vertical-align: top;
+	float: left;
+}
+button.dashboard:hover, button.dashboard.active {
+	background-position:0 20px;
+}
+div.dashboard {
+	background: url("/images/dashboard.png") repeat scroll 0 0 transparent;
+	height:175px;
+	padding:0 12px;
+	text-align:center;
+	width:147px;
+}
+div.dashboard * {
+margin:0;
+padding:0;
+}
+div.dashboard div {
+background: none repeat scroll 0 0 transparent !important;
+cursor:move;
+height:165px;
+overflow:hidden;
+padding-top:10px;
+position:relative;
+width:147px;
+}
+div.dashboard caption {
+background: none;
+color:#CCFF00;
+font:12px/17px Arial,Helvetica,sans-serif;
+padding-top:4px;
+text-align:center;
+width:100%;
+}
+div.dashboard caption a {
+background: none;
+cursor:pointer;
+display:block;
+height:11px;
+overflow:hidden;
+position:absolute;
+text-indent:-100px;
+top:16px;
+width:11px;
+}
+div.dashboard caption a.prev {
+background-image:url("/images/dashboard-prev.gif");
+left:1px;
+}
+div.dashboard caption a.next {
+background-image:url("/images/dashboard-next.gif");
+right:1px;
+}
+div.dashboard caption a:hover {
+background-position:0 11px;
+}
+div.dashboard caption span {
+height:25px;
+position:relative;
+text-align:center;
+background: none;
+}
+div.dashboard caption span.month {
+padding-right:8px;
+background: none;
+}
+div.dashboard caption span.month:after {
+content:",";
+}
+div.dashboard table {
+background: none;
+border:0 none;
+border-collapse:collapse;
+border-spacing:0;
+cursor:default;
+margin:0 auto;
+overflow:hidden;
+width:147px;
+}
+div.dashboard td, div.dashboard th {
+border:0 none;
+color:#999999;
+font:12px Arial,Helvetica,sans-serif;
+height:19px;
+text-align:center;
+width:21px;
+background: none;
+}
+div.dashboard td {
+color:#333333;
+font-size:11px;
+padding-right:5px;
+text-align:right;
+width:16px;
+background: none;
+}
+div.dashboard td.invalid {
+color:#666666;
+}
+div.dashboard td.valid {
+color:#FFFFFF;
+cursor:pointer;
+}
+div.dashboard td.active, div.dashboard td.hover {
+color:#CCFF00;
+cursor:pointer;
+}

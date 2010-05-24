@@ -1,0 +1,20 @@
+== Welcome to Teamwork
+
+Teamwork is an open-source task management system built using Ruby on Rails. It is suitable for small teams to keep constant tabs on projects, tasks and deadlines. Nothing complicated. Straight to the point.
+
+
+== Getting Started
+
+1. Download the whole application
+2. Configure the 'config/googlecal.yml' to your google calendar account
+3. Run it!
+
+== Sharing is Caring
+
+Would really appreciate anyone interested to fork this and add more useful features to it.
+
+
+== Contributer
+
+Adrian Teh
+http://www.leanis.com.my

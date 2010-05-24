@@ -1,0 +1,47 @@
+<div style="float: left; width: 670px;">
+    
+    <% for project in @projects %>
+        <% tasks = project.tasks.find(:all, :conditions => { :user_id => current_user.id }, :order => 'priority DESC') %>
+        <div class="stage rounded-top-5" style="margin-bottom: 15px;">
+            <div class="user-tasks">
+                
+                <div class="header rounded-top-5">
+                    <a href="javascript:void(0)" onclick="Effect.toggle('<%= project.id %>_project','blind')">
+                        <strong><%= project.title.capitalize %></strong>
+                    </a>
+                    <span class="icon overdue" style="float: right;"><%= project.overdue_tasks(current_user) %></span>
+                    <span class="icon task" style="float: right;"><%= project.tasks_count(current_user) %></span>
+                    <div class="clear"></div>
+                </div>
+                <ul class="tasks" id="<%= project.id %>_project" style="margin-bottom: 20px;">
+                    <% for task in tasks  %>
+                    <li>
+                        <div style="width: 55px; float: left; margin-right: 10px;">
+                            <%= task.getIcon %> 
+                        </div>
+                        <div class="task-desc">
+                            <%= link_to shorten(task.description,70), task_url(:id=>task.id) %>
+                        </div>
+                        <div class="task-status">
+                            <span class="icon calendar"><%= distance_of_time_in_words(Date.today,task.deadline) %></span>
+                            <select class="state" disabled>
+                                <%= options_for_select([["Waiting", "waiting"], ["WIP", "working"], ["Completed", "completed"]],task.state) %>
+                            </select>
+                        </div>
+                        <div class="clear"></div>
+                    </li>
+                    <% end %>
+                </ul>
+                
+            </div>
+        </div>
+    <% end %>
+    <% if @projects.size < 1 %>
+        No projects assigned
+    <% end %>
+</div>
+<div class="sidebar">
+    
+    <%= render :partial => '/layouts/user' %>
+
+</div>

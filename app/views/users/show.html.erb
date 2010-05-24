@@ -1,0 +1,31 @@
+<% title "Users" %>
+<div class="stage rounded-top-5" style="margin-bottom: 15px;">
+    <div class="user-tasks">
+        <div class="header rounded-top-5">
+            <span style="float: left;"><%= @user.username %>'s Profile</span><br>
+            <div class="clear"></div>
+        </div>
+        <div class="pad-25">
+        <p>
+          <strong>Fullname:</strong>
+          <%=h @user.profile.fullname ||= '-' %>
+          <br>
+          <strong>Date of birth:</strong>
+          <%=h @user.profile.birthday ||= '-' %>
+          <br><br>
+          <strong>About Me:</strong><br class="margin-5">
+          <%= @user.profile.about ||= '-' %>
+        </p>
+        <p>
+          <% restrict_to "(Admin)" do %>
+              <%= link_to "Edit", edit_user_path(@user) %> | 
+          <% end %>
+          <%= link_to "View All", users_path %>
+        </p>
+        </div>
+    </div>
+</div>
+<div class="sidebar">
+    <%= render :partial => '/layouts/user' %>
+    <%= render :partial => 'stats' %>
+</div>

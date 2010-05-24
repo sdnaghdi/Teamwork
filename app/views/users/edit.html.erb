@@ -1,0 +1,21 @@
+<% title "Edit Users" %>
+
+    <div class="stage rounded-top-5" style="margin-bottom: 15px;">
+        <div class="user-tasks">
+            <div class="header rounded-top-5">
+                <span style="float: left;">Edit '<%= @user.username %>'</span><br>
+                <div class="clear"></div>
+            </div>
+            <div class="pad-25">
+                <%= render :partial => 'form' %>
+                <p>
+                  <%= link_to "Show", @user %> |
+                  <%= link_to "View All", users_path %>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+<div class="sidebar">
+    
+</div>

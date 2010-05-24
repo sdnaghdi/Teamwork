@@ -1,0 +1,41 @@
+<% title 'Projects' %>
+<div class="stage rounded-top-5" style="margin-bottom: 15px;">
+    <div class="user-tasks">
+        <div class="header rounded-top-5">
+            <span style="float: left;">All Projects</span><br>
+            <div class="clear"></div>
+        </div>
+        <div class="pad-25">
+            <table class="list">
+              <tr>
+                <th>Title</th>
+                <th>Deadline</th>
+                <th>State</th>
+                <th colspan="3">Actions</th>
+              </tr>
+              <% for project in @projects %>
+                <tr>
+                  <td><%=h project.title %></td>
+                  <td><%=h simple_date(project.deadline) %></td>
+                  <td><%=h project.state.capitalize %></td>
+                  <td><%= link_to "Show", project %></td>
+                  <td>
+                      <% restrict_to "(Admin | Manager)" do %>
+                        <%= link_to "Edit", edit_project_path(project) %>
+                      <% end %>
+                  </td>
+                  <td>
+                      <% restrict_to "(Admin | Manager)" do %>
+                        <%= link_to "Destroy", project, :confirm => 'Are you sure?', :method => :delete %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </table>
+            
+        </div>
+    </div>
+</div>
+<div class="sidebar">
+    <%= render :partial => '/layouts/projects' %>
+</div>

@@ -1,0 +1,66 @@
+<% content_for :head do %>
+    <%= javascript_include_tag :ckeditor %>
+<% end %>
+<% title "My Account" %>
+<div style="width: 670px; float: left;">
+    <% if current_user.id == @user.id %>
+        <div class="stage rounded-top-5" style="margin-bottom: 15px;">
+            <div class="user-tasks">
+                <div class="header rounded-top-5">
+                    <span style="float: left;">Account Credentials</span><br>
+                    <div class="clear"></div>
+                </div>
+                <div class="pad-25">
+                    <%= render :partial => '/users/form' %>
+                </div>
+            </div>
+        </div>
+    <% end %>
+    <div class="stage rounded-top-5" style="margin-bottom: 15px;">
+        <div class="user-tasks">
+            <div class="header rounded-top-5">
+                <span style="float: left;">Profile Information</span><br>
+                <div class="clear"></div>
+            </div>
+            <div class="pad-25">
+                <% form_for :profile, :url => update_profile_account_url(:id=>@user.id) do |f| %>
+                  <%= f.error_messages %>
+                  <p>
+                    <%= f.label :fullname, "Fullname" %><br />
+                    <%= f.text_field :fullname %>
+                  </p>
+                  <p>
+                    <%= f.label :dob, "Date of Birth" %><br />
+                    <%= date_select("profile", "dob") %>
+                  </p>
+                  <p>
+                    <%= f.label :about, "About Yourself" %><br />
+                    <%= f.cktext_area :about, :toolbar=>'Leanis', :width=>'608px', :height=>'200px' %>
+
+                    <script type="text/javascript">
+                    	//<![CDATA[
+                    	    CKEDITOR.replace( 'profile_about' );
+                    	//]]>
+                    </script>
+                    
+                  </p>
+                  <p>
+                      <button class="button" style="width: auto; padding-bottom: 6px;" type="submit">
+                            <span class="create">Save</span>
+                      </button>
+                  </p>
+                <% end %>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sidebar">
+    <div style="float: left;">
+        <%= gravatar_for @user %> 
+    </div>
+    <div style="float: right; width: 170px; font-size: 12px;">
+        Don't see your avatar?<br>
+        Upload yours at <a href="http://en.gravatar.com/">Gravatar</a>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<% title "Edit Projects" %>
+<div class="stage rounded-top-5" style="margin-bottom: 15px;">
+    <div class="user-tasks">
+        <div class="header rounded-top-5">
+            <span style="float: left;">Edit '<%= @project.title.capitalize %>'</span><br>
+            <div class="clear"></div>
+        </div>
+        <div class="pad-25">
+            <%= render :partial => 'form' %>
+            <p>
+              <%= link_to "Show", @projects %> |
+              <%= link_to "View All", projects_path %>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="sidebar">
+    
+</div>

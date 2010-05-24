@@ -1,0 +1,9 @@
+<div style="float: left; margin-right: 20px; margin-bottom: 15px;">
+    <%= gravatar_for @user %> 
+</div>
+<span style="font-size: 12px; display: block;"><%= @user.username %>'s Current Tasks</span>
+<div style="float: left;">
+    <span class="icon task" style="float: left; margin-top: 10px;"><%= @user.tasks.in_progress.size %></span>
+    <span class="icon overdue" style="float: left; margin-top: 10px;"><%= @user.tasks.overdue.size %></span>
+</div>
+<div class="clear"></div>

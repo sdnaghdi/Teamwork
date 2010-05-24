@@ -1,0 +1,16 @@
+<div class="sidebar-title">
+    <span class="icon chart">Project Stats (<%= @project.state.capitalize %>)</span>
+</div>
+<div style="padding: 10px;">
+    <ul class="stats">
+        <li>
+            <ft><span class="task">Total Tasks</span></ft><vt><%= @project.tasks.completed.size %></vt>
+        </li>
+        <li>
+            <ft><span class="user">Total Members</span></ft><vt><%= @project.members.size %></vt>
+        </li>
+        <li>
+            <ft><span class="time2">Total Hours Spent</span></ft><vt><%= @project.tasks.completed.sum('hours_spent') %></vt>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,28 @@
+<% form_for @user do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :username, "Username" %><br />
+    <%= f.text_field :username %>
+  </p>
+  <p>
+    <%= f.label :password, "Password" %><br />
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <%= f.label :password_confirmation, "Password Confirmation" %><br />
+    <%= f.password_field :password_confirmation %>
+  </p>
+  <% restrict_to "(admin)" do %>
+  <p>
+    <%= f.label :state, "State" %><br/>
+    <select id="user_state" name="user[state]">
+        <%= options_for_select([["Active", "Active"], ["Inactive", "Inactive"]], @user.state) %>
+    </select>
+  </p>
+  <% end %>
+  <p>
+      <button class="button" style="width: auto; padding-bottom: 6px;" type="submit">
+            <span class="create">Save</span>
+      </button>
+  </p>
+<% end %>

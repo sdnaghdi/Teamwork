@@ -1,0 +1,11 @@
+<div class="sidebar-title">
+    <span class="icon chart"><%= @user.username %> Stats</span>
+</div>
+<div style="padding: 10px">
+    <ul class="stats">
+        <li><ft><span class="active-project">Total Projects</span></ft><vt><%= @user.tasks.find(:all, :group=>'project_id').size %></vt></li>
+        <li><ft><span class="task">Completed Tasks</span></ft><vt><%= @user.tasks.completed.size %></vt></li>
+        <li><ft><span class="time2">Total Hours Spent</span></ft><vt><%= @user.tasks.sum('hours_spent') %></vt></li>
+        <li><ft><span class="overdue">Total Overdues</span></ft><vt><%= @user.tasks.overdue.size %></vt></li>
+    </ul>
+</div>

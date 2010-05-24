@@ -1,0 +1,97 @@
+<% title "Projects" %>
+<div style="float: left; width: 670px;">
+    <div class="stage rounded-top-5" style="margin-bottom: 15px;">
+        <div class="user-tasks">
+            <div class="header rounded-top-5">
+                <span style="float: left;"><%= @project.title.capitalize %></span><br>
+                <div class="clear"></div>
+            </div>
+            <div class="pad-25">
+                <p>
+                  <strong>Created:</strong>
+                  <%=h simple_date(@project.created_at) -%><br>
+                  <strong>Deadline:</strong>
+                  <%=h simple_date(@project.deadline) -%><br>
+                  <strong>Description:</strong><br>
+                  <%=h @project.description %>
+                </p>
+
+                <p>
+                  <% restrict_to "(Admin | Manager)" do %>  
+                      <%= link_to "Edit", edit_project_path(@project) %> |
+                      <%= link_to "Destroy", @project, :confirm => 'Are you sure?', :method => :delete %> |
+                  <% end %>
+                  <%= link_to "View All", projects_path %>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="stage rounded-top-5" style="margin-bottom: 15px;">
+        <div class="user-tasks">
+            <div class="header rounded-top-5">
+                <a href="javascript:void(0)" onclick="Effect.toggle('tasks','blind')">
+                    <strong><%= @project.members.size %> Members Involved</strong>
+                </a>
+                <div class="clear"></div>
+            </div>
+            <div class="pad-25" id="tasks" style="display: none;">
+                
+                <table class="list">
+                  <tr>
+                    <th width="60"></th>
+                    <th>Username</th>
+                    <th>Tasks</th>
+                    <th>Hours Spent</th>
+                    
+                  </tr>
+                  <% for user in @project.members %>
+                    <tr>
+                      <td>
+                        <%= gravatar_for user %> 
+                      </td>
+                      <td><%=h user.username %></td>
+                      <td><%=h user.tasks.completed.count(:conditions=>{ :project_id => @project.id }) %></td>
+                      <td><%=h user.tasks.completed.sum(:hours_spent, :conditions=>{ :project_id => @project.id }) %></td>
+                      
+                    </tr>
+                  <% end %>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+    <div class="stage rounded-top-5" style="margin-bottom: 15px;">
+        <div class="user-tasks">
+            
+            <div class="header rounded-top-5">
+                <a href="javascript:void(0)" onclick="Effect.toggle('<%= @project.id %>_project','blind')">
+                    <strong><%= @project.tasks.size %> Tasks</strong>
+                </a>
+                <div class="clear"></div>
+            </div>
+            <ul class="tasks" id="<%= @project.id %>_project" style="margin-bottom: 20px; display: none;">
+                <% for task in @project.tasks  %>
+                <li>
+                    <div style="width: 55px; float: left; margin-right: 10px;">
+                        <%= task.getIcon %> 
+                    </div>
+                    <div class="task-desc">
+                        <%= link_to shorten(task.description,70), task_url(:id=>task.id) %>
+                    </div>
+                    <div class="task-status">
+                        <span class="icon calendar"><%= distance_of_time_in_words(Date.today,task.deadline) %></span>
+                        <select class="state" disabled>
+                            <%= options_for_select([["Waiting", "waiting"], ["WIP", "working"], ["Completed", "completed"]],task.state) %>
+                        </select>
+                    </div>
+                    <div class="clear"></div>
+                </li>
+                <% end %>
+            </ul>
+            
+        </div>
+    </div>
+</div>
+<div class="sidebar">
+    <%= render :partial => 'stats' %>
+</div>
