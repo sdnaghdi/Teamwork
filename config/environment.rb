@@ -2,6 +2,8 @@
 
 # Specifies gem version of Rails to use when vendor/rails is not present
 RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
+ENV['RAILS_ENV'] = 'development'
+
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -40,6 +42,14 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
   
   config.gem "gcal4ruby"
+  config.gem 'cucumber', :lib => false
+  config.gem 'thoughtbot-shoulda',
+             :lib    => false,
+             :source => 'http://gems.github.com'
+  config.gem 'thoughtbot-factory_girl',
+             :lib    => false,
+             :source => "http://gems.github.com"
+  
   
 end
 

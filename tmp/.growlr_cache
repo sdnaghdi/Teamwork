@@ -1,0 +1,2 @@
+
+$.jGrowl('You must first log in or sign up before accessing this page.');
