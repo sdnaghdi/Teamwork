@@ -1,0 +1,18 @@
+# Logfile created on Thu May 27 17:59:58 +0800 2010
+
+Processing TasksController#new (for 127.0.0.1 at 2010-05-27 18:20:37) [GET]
+  Parameters: {"action"=>"new", "controller"=>"tasks"}
+Redirected to http://www.example.com/login
+Filter chain halted as [:login_required] rendered_or_redirected.
+Completed in 21ms (DB: 0) | 302 Found [http://www.example.com/tasks/new]
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2010-05-27 18:20:37) [GET]
+  Parameters: {"action"=>"new", "controller"=>"sessions"}
+Rendering template within layouts/application
+Rendering sessions/new
+  [4;36;1mProject Load (0.0ms)[0m   [0;1mSQLite3::SQLException: no such table: projects: SELECT * FROM "projects" WHERE (state = 'Active') ORDER BY id DESC[0m
+
+
+Processing ApplicationController#new (for 127.0.0.1 at 2010-05-27 18:20:37) [GET]
+  Parameters: {"action"=>"new", "controller"=>"sessions"}
